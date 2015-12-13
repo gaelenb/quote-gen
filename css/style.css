@@ -1,0 +1,95 @@
+
+@media (max-width: 150px) {
+
+}
+.text {
+	text-align: center;
+}
+
+
+@media (max-width: 325px) {
+	
+	.container {
+		padding-right: 5px;
+		padding-left: 5px;
+	}
+	.button-container {
+		-webkit-flex-direction: column;
+		    -ms-flex-direction: column;
+		        flex-direction: column;
+	}
+
+	.col-xs-12 {
+		padding-right: 0;
+		padding-left: 0;
+
+	}
+	.btn-info {
+		margin-left: 0;
+	}
+
+}
+
+
+.btn {
+	margin: 1em 0;
+	min-height: 54px;
+	min-width: 90%;
+
+}
+.col-xs-1, .col-xs-10, .col-xs-11, .col-xs-12, .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6, .col-xs-7, .col-xs-8, .col-xs-9 {
+ float: none;
+}
+
+.text {
+	padding-right: 0px;
+	padding-left: 0px;
+	margin-bottom: .5em;
+}
+.app {
+	max-width: 575px;
+}
+
+
+.tweet-button {
+	
+}
+
+.quote-button {
+	display: inline-block;
+
+}
+#quote-gen {
+	margin: 0 auto;
+}
+
+.button-container {
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-justify-content: center;
+	    -ms-flex-pack: center;
+	        justify-content: center;
+}
+.clearfix {
+	clear: both;
+}
+
+
+
+body {
+	font-family: monospace;
+	font-size: 16px;
+	position: relative;
+}
+@media (min-width: 326px) {
+.btn-info {
+	margin-left: .5em;
+}
+
+.btn {
+	min-width: 100px; 
+}
+
+}
+
