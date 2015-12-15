@@ -7,7 +7,7 @@
 }
 
 
-@media (max-width: 325px) {
+@media (max-width: 425px) {
 	
 	.container {
 		padding-right: 5px;
@@ -30,9 +30,14 @@
 
 }
 
-
+.author {
+	font-style: italic;
+}
+.twitter-share-button {
+	height: 28px;
+}
 .btn {
-	margin: 1em 0;
+	margin: 1em 2px;
 	min-height: 54px;
 	min-width: 90%;
 
@@ -47,23 +52,29 @@
 	margin-bottom: .5em;
 }
 .app {
-	max-width: 575px;
+	max-width: 675px;
+	margin-top: 20%;
+
 }
 
-
-.tweet-button {
-	
+.quote-container {
+		box-shadow: 0 2px 3px rgba(0,0,0,0.5);
+    background: #333;
+    color: #ffe;
+    border-radius: 5px;
+    margin-bottom: 30px;
 }
-
 .quote-button {
 	display: inline-block;
 
 }
+
 #quote-gen {
 	margin: 0 auto;
 }
 
 .button-container {
+
 	display: -webkit-flex;
 	display: -ms-flexbox;
 	display: flex;

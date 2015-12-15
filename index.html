@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css"></link>
 
     <link rel='stylesheet' id='main_css-css' href='css/style.css' type='text/css' media='all' />
+   
 </head>
 
 <body>
@@ -25,37 +26,31 @@
 
 <div class="quote-container container-fluid">
  
-    <div class="text">
-    <span class="quote-info">quote</span>: Give me chastity and continence, but not yet.
-    </div>
-    <div class="text">
-    <span class="quote-info">author</span>: Saint Augustine
-    </div>
-    <div class="text">
-    <span class="quote-info">category</span>: Famous</div>
+
 
 </div>    
  
 
  <form id="quote-gen" class="container-fluid ">
-	<div class="container col-xs-12">
+	<div class="text container-fluid"><h3 class="h3">Generate a random quote!</h3></div>
       <div class="button-container">
         <button class="quote-button btn btn-lg btn-success col-sm-3" type="button">New quote</button>
-        <button class="tweet-button col-sm-3 btn btn-lg btn-warning" type="button">Tweet Quote</button>
-        
+      
+       
+
         <span class="clearfix"></span>
         </div>
-    </div>
-
-    <div class="text container-fluid">Generate a random quote!</div>
-	<div class="col-xs-12">
-      
-    </div>
+      <h4 class="h4">Tweet this quote!</h4>  
+ 
+<div id="new-tweet"></div>
+    
+	
    
 
-    
  </form>
 </section>
+
+
  
 <!-- <section class="container-fluid">
     <h4>Shortcuts:</h4>
@@ -63,6 +58,22 @@
     <li> <kbd>l</kbd> toggle audio.</li></ul>
     <h5 class= "h5">A FCC ABC Production</h5>
  </section> -->
+ <script>window.twttr = (function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0],
+    t = window.twttr || {};
+  if (d.getElementById(id)) return t;
+  js = d.createElement(s);
+  js.id = id;
+  js.src = "https://platform.twitter.com/widgets.js";
+  fjs.parentNode.insertBefore(js, fjs);
+ 
+  t._e = [];
+  t.ready = function(f) {
+    t._e.push(f);
+  };
+ 
+  return t;
+}(document, "script", "twitter-wjs"));</script>
 
 <script type="text/javascript" src="scripts/jquery.script.js"></script>
 <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
