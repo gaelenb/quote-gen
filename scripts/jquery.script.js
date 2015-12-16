@@ -13,43 +13,44 @@ var model = {
 
 
 
-
-
-
-var controller = 
-	{ 
-	requestQuote: function requestQuote() {
-		$.ajax({
-		    url: 'https://andruxnet-random-famous-quotes.p.mashape.com/"', // The URL to the API. You can get this in the API page of the API you intend to consume
+ function  request(){ 
+	return $.ajax({
+			url: 'https://andruxnet-random-famous-quotes.p.mashape.com/"', // The URL to the API. You can get this in the API page of the API you intend to consume
 		    type: 'GET', // The HTTP Method, can be GET POST PUT DELETE etc
 		    data: {}, // Additional parameters here
 		    dataType: 'json',
 		    success: function(data) {
 		    	 model = {
 		    	 	quote: data.quote,
+		    	 	author: data.author
 		    	 	//cache shortened string value for creating a new share button
-		    	 	stringForTweet: data.author
+		    	 	// stringForTweet: data.author
 		    	 			
 		    	 };
-		    	 view.showQuote(model.quote);
+		    	 view.showQuote(model.quote, model.author);
 		    	 
-		    	 console.log(data.quote);
-		    	 
+		    	 return model;
 		    },
 		    error: function(err) { alert(err); },
 		    beforeSend: function(xhr) {
 		    xhr.setRequestHeader("X-Mashape-Authorization", "aPJztPTRfYmshMT0OPwGBRz2016up1ghQyIjsn9T7NV3hcjtIt"); // Enter here your Mashape key
 		    }
-		});
-	},
+
+});
+}
+
+var controller = 
+	{ 
 
 	formatQuote: function formatQuote(data) {
-		var string = data;
+		var quoteData = data;
+		var string = quoteData.quote + "~" + quoteData.author;
 		var length = 140;
 		var trimmedString = string.length > length ? 
                     string.substring(0, length - 3) + "..." : 
                     string.substring(0, length);
 		console.log(trimmedString);
+		model = {tweetString: trimmedString};
 		return trimmedString;
 	}
 
@@ -63,13 +64,14 @@ var controller =
 
 var view = {
 
-	showQuote: function showQuote(data) {
-		var quote = data;
+	showQuote: function showQuote(q, a) {
+		var quote = q;
+		var author = a;
 
 		$('.quote-container').html(
-			"<div class='text quote'>"+quote.quote + "</div>" + "<div class='text author'>~" + quote.author + "</div>");
+			"<div class='text quote'>"+quote + "</div>" + "<div class='text author'>~" + author + "</div>");
 		
-		//triggers creation of new share button
+
 		
 	},
 	shareButton : function shareButton(textData) {
@@ -86,12 +88,10 @@ var view = {
 	  });
 },
 
-	twitInit : function twitInit() {
-		
-		}
+	
 
 };
-$(".new-tweet").attr('id', 'new-tweet');
+
 
 
 var init = function() {
@@ -101,47 +101,30 @@ var init = function() {
 
 $(document).ready(function () {
 
-var defer = $.Deferred();
+window.twttr = (function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0],
+    t = window.twttr || {};
+  if (d.getElementById(id)) return t;
+  js = d.createElement(s);
+  js.id = id;
+  js.src = "https://platform.twitter.com/widgets.js";
+  fjs.parentNode.insertBefore(js, fjs);
+ 
+  t._e = [];
+  t.ready = function(f) {
+    t._e.push(f);
+  };
+ 
+  return t;
+}(document, "script", "twitter-wjs"));
 
-var x= defer.then(function(value) {
-	
-	var newString;
-	var quote = controller.formatQuote(value);
-	// var author = controller.formatQuote(val);
 
-	return quote; 
+var requestQuote = request();
+
+requestQuote.then(window.twttr).then( function() {
+var string = controller.formatQuote(model);
+view.shareButton(string);
 });
-
-
-//NEED TO USE THESE CHAINS ON THE AJAX REQUEST-- twitter script
-//will be done by then.? can use new knoweldge of chains to 
-//load twitter script later. . . ?
-
-
-
-
-defer.resolve(model.quote);
-
-x.done(function(value) {
-	view.shareButton(value);
-});
-
-// controller.requestQuote();
-
-twttr.ready(
-	function(twttr) {
-		twttr.events.bind(
-  'loaded',
-  function (event) {
-    event.widgets.forEach(function (widget) {
-      console.log("Created widget", widget.id);
-    });
-  }
-);
-		// twttr.widgets.load(document.getElementById('new-tweet'));
-		
-	});
-
 
 
 });
@@ -156,12 +139,26 @@ $('.quote-button').click(function() {
 	if(tweetButton) {
 		tweetButton.remove();
 	} 
+	var requestQuote = request();
 	// controller.requestQuote();
-	view.shareButton();
-	// view.shareButton(model.quote);
-	// controller.requestQuote();
+	requestQuote.then(controller.formatQuote).then(view.shareButton);
+	
 });
 
+// document.getElementById('tweetjs').addEventListener('load', function() {
+//         twttr.ready(function (twttr) {
+//             twttr.events.bind('tweet', function(e){
+//                 if(!e) return;
+                
+//             });
+//         });
+//     }, false);
+
+// twttr.ready(
+//   function (twttr) {
+//    console.log(twttr);
+//   }
+// );
 
 
 
