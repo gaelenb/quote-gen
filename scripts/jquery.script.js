@@ -43,15 +43,20 @@ var controller =
 	{ 
 
 	formatQuote: function formatQuote(data) {
-		var quoteData = data;
-		var string = quoteData.quote + "~" + quoteData.author;
-		var length = 140;
-		var trimmedString = string.length > length ? 
-                    string.substring(0, length - 3) + "..." : 
-                    string.substring(0, length);
-		console.log(trimmedString);
-		model = {tweetString: trimmedString};
-		return trimmedString;
+		var quote = data.quote;
+		var author = "~" + data.author;
+		var qL = quote.length;
+		var aL = author.length;
+		var maxL = 140;
+		
+		if (qL + aL > maxL) {
+			var surplus = (qL+aL) % maxL;
+		quote =	quote.substring(0, qL - surplus - 3 ) + "...";
+		}
+		var trimString = quote + author;
+		
+		model = {tweetString: trimString};
+		return trimString;
 	}
 
 };
@@ -70,9 +75,7 @@ var view = {
 
 		$('.quote-container').html(
 			"<div class='text quote'>"+quote + "</div>" + "<div class='text author'>~" + author + "</div>");
-		
-
-		
+			
 	},
 	shareButton : function shareButton(textData) {
 		var quoteText = textData;
@@ -101,6 +104,8 @@ var init = function() {
 
 $(document).ready(function () {
 
+
+
 window.twttr = (function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0],
     t = window.twttr || {};
@@ -121,27 +126,35 @@ window.twttr = (function(d, s, id) {
 
 var requestQuote = request();
 
-requestQuote.then(window.twttr).then( function() {
-var string = controller.formatQuote(model);
-view.shareButton(string);
-});
-
+window.twttr.ready(function() {
+requestQuote.then(controller.formatQuote).then(view.shareButton);
 
 });
 
+///old script didn't always get twttr to load before trying to create the share button
+// requestQuote.then(window.twttr).done(function ()
+// var string = controller.formatQuote(model);
+// view.shareButton(string);
+// }));
 
-//Controls 
-	//for timer
+
+});
+
+
+
 
 $('.quote-button').click(function() {
-	
+	$('.quote-container').fadeOut(1500);
 	var tweetButton = $("iframe[id*='twitter']");
 	if(tweetButton) {
 		tweetButton.remove();
 	} 
 	var requestQuote = request();
 	// controller.requestQuote();
-	requestQuote.then(controller.formatQuote).then(view.shareButton);
+	requestQuote.then(controller.formatQuote).then(view.shareButton).done(function() {
+		$('.quote-container').fadeIn(1200);
+
+	});
 	
 });
 

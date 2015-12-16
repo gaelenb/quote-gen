@@ -29,6 +29,22 @@
 	}
 
 }
+.box:nth-child(odd) {
+	border: 1px solid #333;
+	width: 50px;
+	height: 50px;
+	display: inline-block;
+	margin: 20px;
+
+}
+
+.box:nth-child(even) {
+	background: pink;
+		width: 50px;
+	height: 50px;
+	display: inline-block;
+	margin: 20px;
+}
 
 .author {
 	font-style: italic;
@@ -53,7 +69,7 @@
 }
 .app {
 	max-width: 675px;
-	margin-top: 20%;
+	margin-top: 10%;
 
 }
 
@@ -63,6 +79,7 @@
     color: #ffe;
     border-radius: 5px;
     margin-bottom: 30px;
+    padding: 50px;
 }
 .quote-button {
 	display: inline-block;
